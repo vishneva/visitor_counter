@@ -29,7 +29,7 @@ pipeline {
                 dir(TERRAFORM_FOLDER_PATH) {
                     sh 'pwd'
                     sh 'ls -la'
-                    sh 'terraform init -backend-config="terraform"'
+                    sh 'terraform init -backend-config=terraform'
                 }
             }
         }
