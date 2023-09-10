@@ -6,10 +6,6 @@ pipeline {
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Select the action to perform')
     }
 
-    tools {
-        terraform 'terraform-11'
-    }
-
     environment {
         TERRAFORM_FOLDER_PATH = 'terraform'
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
