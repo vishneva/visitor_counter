@@ -29,7 +29,7 @@ pipeline {
                 script{
                     dir(TERRAFORM_FOLDER_PATH) {
                         sh 'pwd'
-                        sh 'terraform init -input=false'
+                        sh 'terraform init'
                     }
                 }
 
