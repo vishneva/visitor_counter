@@ -6,6 +6,10 @@ pipeline {
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Select the action to perform')
     }
 
+    tools {
+        terraform 'terraform-11'
+    }
+
     environment {
         TERRAFORM_FOLDER_PATH = 'terraform'
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
@@ -23,7 +27,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 dir(TERRAFORM_FOLDER_PATH) {
-                    sh "terraform init -input=false"
+                    sh 'terraform init -input=false'
                 }
             }
         }
@@ -31,7 +35,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 dir(TERRAFORM_FOLDER_PATH) {
-                    sh "terraform plan -out tfplan"
+                    sh 'terraform plan -out tfplan'
                     sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
             }
@@ -44,7 +48,7 @@ pipeline {
                         if (params.action == 'apply') {
                             if (!params.autoApprove) {
                                 def plan = readFile 'tfplan.txt'
-                                input message: "Should we continue and apply the plan?",
+                                input message: 'Should we continue and apply the plan?',
                                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                             }
                             sh 'terraform ${action} -input=false tfplan'
