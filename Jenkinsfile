@@ -26,13 +26,10 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                script{
-                    dir(TERRAFORM_FOLDER_PATH) {
-                        sh 'pwd'
-                        sh 'terraform init'
-                    }
+                dir(TERRAFORM_FOLDER_PATH) {
+                    sh 'pwd'
+                    sh 'terraform init'
                 }
-
             }
         }
 
