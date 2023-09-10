@@ -28,7 +28,7 @@ pipeline {
             steps {
                 dir(TERRAFORM_FOLDER_PATH) {
                     sh 'pwd'
-                    sh 'la -la'
+                    sh 'ls -la'
                     sh 'terraform init'
                 }
             }
