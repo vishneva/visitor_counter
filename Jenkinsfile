@@ -17,9 +17,7 @@ pipeline {
          stage('Checkout') {
                 steps {
                     script{
-                        dir(TERRAFORM_FOLDER_PATH) {
-                            git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
-                        }
+                        git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
                     }
             }
         }
@@ -29,7 +27,7 @@ pipeline {
                 dir(TERRAFORM_FOLDER_PATH) {
                     sh 'pwd'
                     sh 'ls -la'
-                    sh 'terraform init -backend-config=terraform'
+                    sh 'terraform init'
                 }
             }
         }
