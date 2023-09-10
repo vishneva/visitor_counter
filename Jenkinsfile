@@ -6,13 +6,6 @@ pipeline {
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Select the action to perform')
     }
 
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        disableConcurrentBuilds()
-        timstamps()
-        ansiColor('xtrem')
-    }
-
     environment {
         TERRAFORM_FOLDER_PATH = 'terraform'
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
