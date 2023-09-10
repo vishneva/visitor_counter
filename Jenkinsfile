@@ -19,8 +19,10 @@ pipeline {
 
     stages {
          stage('Checkout') {
-            steps {
-                git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
+            dir(TERRAFORM_FOLDER_PATH) {
+                steps {
+                    git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
+                }
             }
         }
 
