@@ -27,6 +27,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh 'cd ${TERRAFORM_FOLDER_PATH}'
+                sh 'pwd'
                 sh 'terraform init -input=false'
             }
         }
