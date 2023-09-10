@@ -16,27 +16,27 @@ pipeline {
     stages {
          stage('Checkout') {
                 steps {
-                    dir(TERRAFORM_FOLDER_PATH) {
-                        git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
+                    script{
+                        dir(TERRAFORM_FOLDER_PATH) {
+                            git branch: 'deployment', url: 'https://github.com/vishneva/visitor_counter.git'
+                        }
                     }
             }
         }
 
         stage('Terraform Init') {
             steps {
-                dir(TERRAFORM_FOLDER_PATH) {
-                    sh 'terraform init -input=false'
-                }
+                sh 'cd ${TERRAFORM_FOLDER_PATH}'
+                sh 'terraform init -input=false'
             }
         }
 
         stage('Terraform Plan') {
             steps {
                 script{
-                    dir(TERRAFORM_FOLDER_PATH) {
+                    sh 'cd ${TERRAFORM_FOLDER_PATH}'
                     sh 'terraform plan -out terraform.tfplan'
                     sh 'terraform show -no-color terraform.tfplan > tfplan.txt'
-                    }
                 }
             }
         }
