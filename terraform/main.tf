@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu" {
 
 
 resource "aws_instance" "arc_instance" {
-  ami = var.instance_ami
+  ami = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   tags = {
     Name = var.instance_name

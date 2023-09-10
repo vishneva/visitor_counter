@@ -10,12 +10,6 @@ variable "instance_type"{
   default = "t2.micro"
 }
 
-variable "instance_ami"{
-  description = "Ubuntu AMI ID"
-  type = string
-  default = "ami-0f5ee92e2d63afc18"
-}
-
 variable "aws_region" {
   description = "AWS region"
   type = string
