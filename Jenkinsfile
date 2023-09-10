@@ -25,8 +25,6 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 dir(TERRAFORM_FOLDER_PATH) {
-                    sh 'pwd'
-                    sh 'ls -la'
                     sh 'terraform init'
                 }
             }
@@ -35,9 +33,10 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script{
-                    sh 'cd ${TERRAFORM_FOLDER_PATH}'
-                    sh 'terraform plan -out terraform.tfplan'
-                    sh 'terraform show -no-color terraform.tfplan > tfplan.txt'
+                    dir(TERRAFORM_FOLDER_PATH) {
+                        sh 'terraform plan -out terraform.tfplan'
+                        sh 'terraform show -no-color terraform.tfplan > tfplan.txt'
+                    }
                 }
             }
         }
