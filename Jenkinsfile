@@ -32,11 +32,9 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                script{
-                    dir(TERRAFORM_FOLDER_PATH) {
-                        sh 'terraform plan -out tfplan'
-                        sh 'terraform show -no-color tfplan > tfplan.txt'
-                    }
+                dir(TERRAFORM_FOLDER_PATH) {
+                    sh 'terraform plan -out tfplan'
+                    sh 'terraform show -no-color tfplan > tfplan.txt'
                 }
             }
         }
