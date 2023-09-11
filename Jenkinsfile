@@ -36,7 +36,7 @@ pipeline {
                     dir(TERRAFORM_FOLDER_PATH){
                         if (params.action == 'apply') {
                             if (!params.autoApprove) {
-                                def plan = readFile 'tfplan.txt'
+                                def plan = 'tfplan.txt'
                                 input message: 'Should we continue and apply the plan?',
                                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                             }
