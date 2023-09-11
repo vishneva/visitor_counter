@@ -30,17 +30,25 @@ pipeline {
             }
         }
 
+        stage('Terraform Plan') {
+            steps {
+                dir(TERRAFORM_FOLDER_PATH) {
+                    sh 'terraform plan -out terraform.tfplan'
+                }
+            }
+        }
+
         stage('Terraform Apply') {
             steps {
                 script {
                     dir(TERRAFORM_FOLDER_PATH){
                         if (params.action == 'apply') {
                             if (!params.autoApprove) {
-                                def plan = 'tfplan.txt'
+                                def plan = readFile 'tfplan.txt'
                                 input message: 'Should we continue and apply the plan?',
                                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                             }
-                            sh 'terraform ${action} -input=false'
+                            sh 'terraform ${action} -input=false terraform.tfplan'
                         } else if (params.action == 'destroy') {
                             sh 'terraform ${action} --auto-approve'
                         } else {
