@@ -34,8 +34,8 @@ pipeline {
             steps {
                 script{
                     dir(TERRAFORM_FOLDER_PATH) {
-                        sh 'terraform plan -out terraform.tfplan'
-                        sh 'terraform show -no-color terraform.tfplan > tfplan.txt'
+                        sh 'terraform plan -out tfplan'
+                        sh 'terraform show -no-color tfplan > tfplan.txt'
                     }
                 }
             }
@@ -51,7 +51,7 @@ pipeline {
                                 input message: 'Should we continue and apply the plan?',
                                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                             }
-                            sh 'terraform ${action} -input=false terraform.tfplan'
+                            sh 'terraform ${action} -input=false tfplan'
                         } else if (params.action == 'destroy') {
                             sh 'terraform ${action} --auto-approve'
                         } else {
