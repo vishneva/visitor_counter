@@ -33,7 +33,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 dir(TERRAFORM_FOLDER_PATH) {
-                    sh 'terraform plan'
+                    sh 'terraform plan -out terraform.tfplan'
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
                                 input message: 'Should we continue and apply the plan?',
                                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                             }
-                            sh 'terraform ${action} -input=false tfplan'
+                            sh 'terraform ${action} -input=false terraform.tfplan'
                         } else if (params.action == 'destroy') {
                             sh 'terraform ${action} --auto-approve'
                         } else {
