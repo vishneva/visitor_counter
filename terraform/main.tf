@@ -4,6 +4,10 @@ terraform {
       source = "hashicorp/aws"
       version = "~>4.0"
     }
+    ansible = {
+      version = "~> 0.0.1"
+      source  = "terraform-ansible.com/ansibleprovider/ansible"
+    }
   }
 }
 
@@ -34,5 +38,15 @@ resource "aws_instance" "arc_instance" {
   key_name = data.aws_key_pair.selected.key_name
   tags = {
     Name = var.instance_name
+  }
+}
+
+resource "ansible_host" "ec2_inst" {
+  name               = public_ip
+  inventory_hostname = ""
+  variables          = {
+    ansible_user                 = "ansible",
+    ansible_ssh_private_key_file = var.aws_key_pair_name,
+    ansible_python_interpreter   = "/usr/bin/python3"
   }
 }
